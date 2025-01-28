@@ -7,3 +7,7 @@ export function getFormattedDate(date) {
 function padStartZero(num) {
   return num.toString().padStart(2, 0);
 }
+
+export function getDateDaysAgo(date, days) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() - days);
+}
