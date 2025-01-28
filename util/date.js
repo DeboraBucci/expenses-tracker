@@ -1,7 +1,5 @@
 export function getFormattedDate(date) {
-  return `${date.getFullYear()}/${padStartZero(
-    date.getMonth() + 1
-  )}/${padStartZero(date.getDay())}`;
+  return date.toISOString().slice(0, 10);
 }
 
 function padStartZero(num) {
