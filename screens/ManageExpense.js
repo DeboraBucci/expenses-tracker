@@ -2,14 +2,18 @@ import { useContext, useLayoutEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constants/styles";
-import Button from "../components/UI/Button";
 import { ExpensesContext } from "../store/expenses-context";
+import ExpenseForm from "../components/manage-expense/ExpenseForm";
 
 function ManageExpense({ route, navigation }) {
   const expensesCtx = useContext(ExpensesContext);
 
   const editedExpenseId = route.params?.expenseId;
   const isEditing = !!editedExpenseId;
+
+  const selectedExpense = expensesCtx.expenses.find(
+    (expense) => expense.id === editedExpenseId
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -26,19 +30,11 @@ function ManageExpense({ route, navigation }) {
     navigation.goBack();
   }
 
-  function confirmHandler() {
+  function confirmHandler(expenseData) {
     if (isEditing) {
-      expensesCtx.updateExpense(editedExpenseId, {
-        description: "update test",
-        amount: 29.99,
-        date: new Date(),
-      });
+      expensesCtx.updateExpense(editedExpenseId, expenseData);
     } else {
-      expensesCtx.addExpense({
-        description: "test",
-        amount: 19.99,
-        date: new Date(),
-      });
+      expensesCtx.addExpense(expenseData);
     }
 
     navigation.goBack();
@@ -46,12 +42,12 @@ function ManageExpense({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttons}>
-        <Button mode="flat" onPress={canceHandler}>
-          Cancel
-        </Button>
-        <Button onPress={confirmHandler}>{isEditing ? "Update" : "Add"}</Button>
-      </View>
+      <ExpenseForm
+        defaultValues={selectedExpense}
+        submitBtnLabel={isEditing ? "Update" : "Add"}
+        onCancel={canceHandler}
+        onSubmit={confirmHandler}
+      />
 
       {isEditing && (
         <View style={styles.deleteContainer}>
@@ -81,11 +77,5 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderTopColor: GlobalStyles.colors.primary200,
     alignItems: "center",
-  },
-  buttons: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 12,
   },
 });
