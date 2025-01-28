@@ -11,6 +11,7 @@ import AllExpenses from "./screens/AllExpenses";
 
 import { GlobalStyles } from "./constants/styles";
 import IconButton from "./components/expenses-output/UI/IconButton";
+import ExpensesContextProvider from "./store/expenses-context";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -63,7 +64,7 @@ function ExpensesOverview() {
 
 export default function App() {
   return (
-    <>
+    <ExpensesContextProvider>
       <StatusBar style="auto" />
 
       <NavigationContainer>
@@ -90,6 +91,6 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </>
+    </ExpensesContextProvider>
   );
 }
