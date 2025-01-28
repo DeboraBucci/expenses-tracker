@@ -1,8 +1,8 @@
 import { useContext, useLayoutEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import IconButton from "../components/expenses-output/UI/IconButton";
+import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constants/styles";
-import Button from "../components/expenses-output/UI/Button";
+import Button from "../components/UI/Button";
 import { ExpensesContext } from "../store/expenses-context";
 
 function ManageExpense({ route, navigation }) {
